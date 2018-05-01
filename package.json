@@ -6,9 +6,9 @@
     "test": "node_modules/mocha/bin/_mocha tests/ -R spec --recursive"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "hideokamoto",
+  "license": "MIT",
+  "description": "CLI tool to update cloudfront distribution config more easly.",
   "dependencies": {
     "aws-sdk": "^2.230.1",
     "bluebird": "^3.5.1",
