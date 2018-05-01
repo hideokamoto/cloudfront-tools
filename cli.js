@@ -18,8 +18,16 @@ program.command('update-all')
   .description('Update ALL CloudFront distributions')
   .option("-d, --body <config>", "updated distribution config")
   .action((options) => {
-    const config = options.config != null ? JSON.parse(options.config) : {}
+    if (!options.body) {
+      console.error(chalk.red('[Error]: --body is required.'))
+      return
+    }
+    const config = JSON.parse(options.body)
     console.log(config)
+    const wf = new UpdateDistribution()
+    wf.updateAllDistribution(config)
+      .then(() => console.log(chalk.green(`[Success]: Success to send update request.`)))
+      .catch(err => console.log(chalk.red('[Error]: Fail to update distribution\n'), err))
   })
 
 // update single distribution config

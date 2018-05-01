@@ -27,6 +27,39 @@ class UpdateDistribution {
       })
   }
   /**
+   * Update all CloudFront distributions
+   * @param {Object} updatedConfig - Update distribution config
+   **/
+  updateAllDistribution(updatedConfig) {
+    return this.updateAllDistributionWorkflow(updatedConfig)
+  }
+  /**
+   * Update all CloudFront distributions
+   * @param {Object} updatedConfig - Update distribution config
+   * @param {string} [marker=''] - next marker for listDistribution api
+   **/
+  updateAllDistributionWorkflow(updatedConfig, marker = '') {
+    return this.cloudfront.listDistribution()
+      .then(data => {
+        const listData = data.DistributionList || {}
+        if (this.shouldCallResursiveWf(listData)) {
+
+        }
+      })
+  }
+  /**
+   * Should call recursive the updateAllDistributionWorkflow() function
+   *
+   * @param {Object} listData - cloudfront.listDistribution response
+   * @return bool - if true, should call  recursive
+   **/
+  shouldCallResursiveWf(listData = {}) {
+    if (Object.keys(listData).length === 0) return false
+    if (listData.NextMarker && listData.NextMarker !== '') return true
+    return false
+  }
+
+  /**
    * Generate update CloudFront distribution params
    *
    * @param {object} data - cloudfront.getCloudFrontDistribution results

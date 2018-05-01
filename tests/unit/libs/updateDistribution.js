@@ -140,6 +140,29 @@ const baseConfig = {
 
 describe('libs/updateDistribution.js', () => {
   const c = new UpdateDistribution()
+  describe('#shouldCallResursiveWf()', () => {
+    const param = {
+      Marker: '',
+      NextMarker: '',
+      MaxItems: 1,
+      IsTruncated: true,
+      Quantity: 1,
+      Items: []
+    }
+    it('should return false when param is empty', () => {
+      const result = c.shouldCallResursiveWf()
+      assert.equal(result, false)
+    })
+    it('should return false when param has not NextMarker', () => {
+      const result = c.shouldCallResursiveWf(param)
+      assert.equal(result, false)
+    })
+    it('should return true when param has NextMarker', () => {
+      param.NextMarker = 'aaa'
+      const result = c.shouldCallResursiveWf(param)
+      assert.equal(result, true)
+    })
+  })
   describe('#mergeDistributionConfig()', () => {
     it('should update IsIPV6Enabled param to be true when given valid update params', () => {
       const updateConfig = {

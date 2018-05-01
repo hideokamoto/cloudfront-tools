@@ -29,6 +29,19 @@ class cloudfront {
   updateDistribution (params) {
     return this.cloudfront.updateDistribution(params).promise()
   }
+  /**
+   * list cloudfront distributions
+   *
+   * @param {string} [marker=''] - next marker for listDistribution api
+   * @return {Promise} result of cloudfront.updateDistribution api
+   **/
+  listDistribution(marker = '') {
+    const params = {
+      Marker: marker,
+      MaxItems: '100'
+    };
+    return this.cloudfront.listDistributions(params).promise()
+  }
 }
 
 module.exports = cloudfront
