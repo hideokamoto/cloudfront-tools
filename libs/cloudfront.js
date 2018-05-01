@@ -38,7 +38,7 @@ class cloudfront {
   listDistribution(marker = '') {
     const params = {
       Marker: marker,
-      MaxItems: '100'
+      MaxItems: '1'
     };
     return this.cloudfront.listDistributions(params).promise()
   }

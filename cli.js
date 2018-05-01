@@ -13,6 +13,7 @@ const UpdateDistribution = require('./libs/updateDistribution')
 program
   .version('0.0.1', '-v, --version')
 
+/*
 // update all distribution config
 program.command('update-all')
   .description('Update ALL CloudFront distributions')
@@ -29,6 +30,7 @@ program.command('update-all')
       .then(() => console.log(chalk.green(`[Success]: Success to send update request.`)))
       .catch(err => console.log(chalk.red('[Error]: Fail to update distribution\n'), err))
   })
+*/
 
 // update single distribution config
 program.command('update')

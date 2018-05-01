@@ -1,4 +1,5 @@
 const chalk = require('chalk')
+const BbPromise = require('bluebird')
 const defaultCFClass = require('./cloudfront')
 
 class UpdateDistribution {
@@ -14,13 +15,13 @@ class UpdateDistribution {
    * run update distribution config workflow
    *
    * @param {string} distributionId - CloudFront distribution id
-   * @param {Object} updatedConfig - Update distribution config
+   * @param {Object} updateConfig - Update distribution config
    **/
-  updateWorkflow(distributionId, updatedConfig) {
+  updateWorkflow(distributionId, updateConfig) {
     return this.cloudfront.getDistribution(distributionId)
       .then(data => {
         const distribution = data.Distribution
-        const config = this.mergeDistributionConfig(distribution.DistributionConfig, updatedConfig)
+        const config = this.mergeDistributionConfig(distribution.DistributionConfig, updateConfig)
         const params = this.createUpdateDistributionParam(data, config)
         console.log(chalk.green('[Inprogress]: new distribution config \n'), params)
         return this.cloudfront.updateDistribution(params)
@@ -28,23 +29,22 @@ class UpdateDistribution {
   }
   /**
    * Update all CloudFront distributions
-   * @param {Object} updatedConfig - Update distribution config
+   * @param {Object} updateConfig - Update distribution config
    **/
-  updateAllDistribution(updatedConfig) {
-    return this.updateAllDistributionWorkflow(updatedConfig)
+  updateAllDistribution(updateConfig) {
+    return this.updateAllDistributionWorkflow(updateConfig)
   }
   /**
    * Update all CloudFront distributions
-   * @param {Object} updatedConfig - Update distribution config
+   * @param {Object} updateConfig - Update distribution config
    * @param {string} [marker=''] - next marker for listDistribution api
    **/
-  updateAllDistributionWorkflow(updatedConfig, marker = '') {
-    return this.cloudfront.listDistribution()
+  updateAllDistributionWorkflow(updateConfig, marker = '') {
+    return this.cloudfront.listDistribution(marker)
       .then(data => {
         const listData = data.DistributionList || {}
-        if (this.shouldCallResursiveWf(listData)) {
-
-        }
+        if (!this.shouldCallResursiveWf(listData)) return BbPromise.resolve(true)
+        return this.updateAllDistributionWorkflow(updateConfig, listData.NextMarker)
       })
   }
   /**
@@ -79,11 +79,11 @@ class UpdateDistribution {
    * merge new distribution config
    *
    * @param {Object} distConfig - Distribution config
-   * @param {Object} updatedConfig - updated config
+   * @param {Object} updateConfig - updated config
    * @return {Object} merged config
    **/
-  mergeDistributionConfig(distConfig, updatedConfig) {
-    const config = Object.assign({}, distConfig, updatedConfig)
+  mergeDistributionConfig(distConfig, updateConfig) {
+    const config = Object.assign({}, distConfig, updateConfig)
     return config
   }
 
