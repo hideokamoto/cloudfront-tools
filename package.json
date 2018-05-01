@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "aws-sdk": "^2.230.1",
     "chalk": "^2.4.1",
     "commander": "^2.15.1"
   }
