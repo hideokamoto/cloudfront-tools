@@ -6,6 +6,9 @@
 const program = require('commander')
 const chalk = require('chalk')
 
+// libs
+const UpdateDistribution = require('./libs/updateDistribution')
+
 // version information
 program
   .version('0.0.1', '-v, --version')
@@ -26,12 +29,16 @@ program.command('update')
   .option("-d, --body <config>", "updated distribution config")
   .action((options) => {
     const distId = options.distribution_id || ''
+    console.log(distId)
     if (!distId) {
       console.error(chalk.red('[Error]: --distribution_id is required.'))
       return
     }
     const config = options.config != null ? JSON.parse(options.config) : {}
-    console.log(config)
+    const wf = new UpdateDistribution()
+    wf.updateWorkflow(distId, config)
+      .then(() => console.log('update succeeded'))
+      .catch(err => console.log(chalk.red('[Error]: fail to update distribution\n'), err))
   })
 
 program.parse(process.argv)
