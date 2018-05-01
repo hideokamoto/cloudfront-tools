@@ -1,6 +1,6 @@
 {
   "name": "cf-tools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "cli.js",
   "scripts": {
     "test": "node_modules/mocha/bin/_mocha tests/ -R spec --recursive"

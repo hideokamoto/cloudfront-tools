@@ -4,15 +4,14 @@ CLI tool to update cloudfront distribution config more easly.
 ## Getting started
 
 ```
-$ git clone https://github.com/hideokamoto/cloudfront-tools.git
-$ npm i
-$ ./cli -h
+$ npm i -g cf-tools
+$ cf-tools -h
 ```
 
-## commands
+## Commands
 
 ```
-$ ./cli.js -h
+$ cf-tools -h
 
   Usage: cli [options] [command]
 
@@ -29,7 +28,7 @@ $ ./cli.js -h
 ### update
 
 ```
-$ ./cli.js update -h
+$ cf-tools update -h
 
   Usage: update [options]
 
@@ -42,12 +41,20 @@ $ ./cli.js update -h
     -h, --help                               output usage information
 ```
 
-#### example
+#### Example
 
 ```
-$ ./cli.js update -i EXXXXXX -d '{"IsIPV6Enabled": true}'
+$ cf-tools update -i EXXXXXX -d '{"IsIPV6Enabled": true}'
 ...
 [Success]: Start to update the distribution - EXXXXXX
+```
+
+## Development
+
+```
+$ git clone https://github.com/hideokamoto/cloudfront-tools.git
+$ npm i
+$ ./cli -h
 ```
 
 ## Feature
