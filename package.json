@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/mocha/bin/_mocha tests/ -R spec --recursive"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +13,9 @@
     "aws-sdk": "^2.230.1",
     "chalk": "^2.4.1",
     "commander": "^2.15.1"
+  },
+  "devDependencies": {
+    "mocha": "^5.1.1",
+    "power-assert": "^1.5.0"
   }
 }
