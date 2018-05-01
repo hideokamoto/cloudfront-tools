@@ -29,16 +29,20 @@ program.command('update')
   .option("-d, --body <config>", "updated distribution config")
   .action((options) => {
     const distId = options.distribution_id || ''
-    console.log(distId)
+    console.log(chalk.green(`[Start]: Start to update the distribution - ${distId}`))
     if (!distId) {
       console.error(chalk.red('[Error]: --distribution_id is required.'))
       return
     }
-    const config = options.config != null ? JSON.parse(options.config) : {}
+    if (!options.body) {
+      console.error(chalk.red('[Error]: --body is required.'))
+      return
+    }
+    const config = JSON.parse(options.body)
     const wf = new UpdateDistribution()
     wf.updateWorkflow(distId, config)
-      .then(() => console.log('update succeeded'))
-      .catch(err => console.log(chalk.red('[Error]: fail to update distribution\n'), err))
+      .then(() => console.log(chalk.green(`[Success]: Success to send update request for the distribution - ${distId}`)))
+      .catch(err => console.log(chalk.red('[Error]: Fail to update distribution\n'), err))
   })
 
 program.parse(process.argv)

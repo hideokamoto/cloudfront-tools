@@ -1,3 +1,4 @@
+const chalk = require('chalk')
 const defaultCFClass = require('./cloudfront')
 
 class UpdateDistribution {
@@ -21,6 +22,7 @@ class UpdateDistribution {
         const distribution = data.Distribution
         const config = this.mergeDistributionConfig(distribution.DistributionConfig, updatedConfig)
         const params = this.createUpdateDistributionParam(data, config)
+        console.log(chalk.green('[Inprogress]: new distribution config \n'), params)
         return this.cloudfront.updateDistribution(params)
       })
   }
@@ -48,9 +50,7 @@ class UpdateDistribution {
    * @return {Object} merged config
    **/
   mergeDistributionConfig(distConfig, updatedConfig) {
-    const config = distConfig
-    console.log(JSON.stringify(distConfig))
-    config.IsIPV6Enabled = 'true';
+    const config = Object.assign({}, distConfig, updatedConfig)
     return config
   }
 
