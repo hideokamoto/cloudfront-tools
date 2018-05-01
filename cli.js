@@ -11,7 +11,7 @@ const UpdateDistribution = require('./libs/updateDistribution')
 
 // version information
 program
-  .version('0.0.1', '-v, --version')
+  .version('1.0.1', '-v, --version')
 
 /*
 // update all distribution config

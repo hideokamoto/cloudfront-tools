@@ -1,6 +1,6 @@
 {
-  "name": "cloudfront-tools",
-  "version": "1.0.0",
+  "name": "cf-tools",
+  "version": "1.0.1",
   "main": "cli.js",
   "scripts": {
     "test": "node_modules/mocha/bin/_mocha tests/ -R spec --recursive"
@@ -18,5 +18,8 @@
   "devDependencies": {
     "mocha": "^5.1.1",
     "power-assert": "^1.5.0"
+  },
+  "bin": {
+    "cf-tools": "bin/cf-tools"
   }
 }
